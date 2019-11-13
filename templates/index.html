@@ -3,7 +3,6 @@
 <html lang="en">
   <head>
     <meta charset="utf-8"/>
-    <title>My movies</title>
   </head>
   <body>
     <table style="border: 1px solid black;align-content: center;">
@@ -20,7 +19,7 @@
         <td style="border: 1px solid black;text-align: center;">{{item.cash}}</td>
         <td style="border: 1px solid black;text-align: center;">{{item.mobyCoin}}</td>
         <td>
-          <form action="/" method="post">
+          <form action="/signedin" method="post">
             <input type="hidden" name="id_of_balance" value="{{item.id}}" />
             <button type="submit" >Delete</button>
           </form>
@@ -28,8 +27,7 @@
       </tr>
       {% endfor %}
     </table>
-    <h1>My movie collection</h1>
-    <form action="/" method="post">
+    <form action="/signedin" method="post">
     Name: <input type="text" name="Name">
     Cash: <input type="text" name="Cash">
     MobyCoin: <input type="text" name="MobyCoin">

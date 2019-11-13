@@ -1,6 +1,12 @@
 from flask import *
 import psycopg2 as dbapi2
 import names
+from passlib.hash import pbkdf2_sha256 as hasher
+
+class User:
+  def __init__(self, User_name, Password):
+    self.user_name = User_name
+    self.password = hasher.hash(Password)
 
 class Balance:
   def __init__(self, Id, Name, Cash=0, MobyCoin=0):
@@ -12,6 +18,31 @@ class Balance:
 class Database:
   def __init__(self, connection_string):
     self.connection_string = connection_string
+  def create_user(self):
+    with dbapi2.connect(self.connection_string) as connection:
+      cursor = connection.cursor()
+      sql_command="CREATE TABLE IF NOT EXISTS USERS (USER_NAME VARCHAR(100) PRIMARY KEY, PASSWORD VARCHAR(1000))"
+      cursor.execute(sql_command)
+      connection.commit()
+      cursor.close()
+  def add_user(self,user):
+    with dbapi2.connect(self.connection_string) as connection:
+      cursor = connection.cursor()
+      sql_command="INSERT INTO USERS (USER_NAME,PASSWORD) VALUES (%(user_name)s, %(password)s)"
+      cursor.execute(sql_command,{'user_name':user.user_name,'password':user.password})
+      connection.commit()
+      cursor.close()
+  def get_hashed_password(self,name):
+    with dbapi2.connect(self.connection_string) as connection:
+      cursor = connection.cursor()
+      sql_command="SELECT PASSWORD FROM USERS WHERE(USER_NAME = %(user_name)s)"
+      cursor.execute(sql_command,{'user_name':name})
+      hashed_password = cursor.fetchone()
+      connection.commit()
+      cursor.close()
+    return hashed_password
+  def verify_user(self,password,hashed_password):
+    return(hasher.verify(password,hashed_password))
   def create_balance(self):
     with dbapi2.connect(self.connection_string) as connection:
       cursor = connection.cursor()
