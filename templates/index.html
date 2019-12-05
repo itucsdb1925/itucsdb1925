@@ -1,0 +1,46 @@
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8"/>
+  </head>
+  <body>
+    <table style="border: 1px solid black;align-content: center;">
+      <tr style="border: 1px solid black;">
+        <th style="border: 1px solid black;">Id</th>
+        <th style="border: 1px solid black;">Name</th>
+        <th style="border: 1px solid black;">Cash</th>
+        <th style="border: 1px solid black;">MobyCoin</th>
+      </tr>
+      {% for item in balance %}
+      <tr style="border: 1px solid black;">
+        <td style="border: 1px solid black;text-align: center;">{{item.id}}</td>
+        <td style="border: 1px solid black;text-align: center;">{{item.name}}</td>
+        <td style="border: 1px solid black;text-align: center;">{{item.cash}}</td>
+        <td style="border: 1px solid black;text-align: center;">{{item.mobyCoin}}</td>
+        <td>
+          <form action="/signedin" method="post">
+            <input type="hidden" name="id_to_delete" value="{{item.id}}" />
+            <button type="submit" >Delete</button>
+          </form>
+        </td>
+        <td>
+          <form action="/signedin" method="post">
+            <input type="hidden" name="id_to_update" value="{{item.id}}" />
+            <button type="submit" >Update</button>
+          </form>
+        </td>
+      </tr>
+      {% endfor %}
+    </table>
+    <form action="/signedin" method="post">
+    Name: <input type="text" name="Name">
+    Cash: <input type="text" name="Cash">
+    MobyCoin: <input type="text" name="MobyCoin">
+    <input type="submit" value="Add">
+    </form>
+    {% if num[0] and num[1] %}{{num[0]+num[1]}}{% endif %}
+    <p>
+  </body>
+</html>
+{% endblock %}
