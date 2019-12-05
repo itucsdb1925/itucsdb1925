@@ -25,22 +25,19 @@
           </form>
         </td>
         <td>
-          <form action="/signedin" method="post">
+          <form action="/update" method="post">
             <input type="hidden" name="id_to_update" value="{{item.id}}" />
             <button type="submit" >Update</button>
           </form>
         </td>
-            <input type="hidden" name="id_of_balance" value="{{item.id}}" />
-            <button type="submit" >Delete</button>
-          </form>
-        </td>
+
       </tr>
       {% endfor %}
     </table>
     <form action="/signedin" method="post">
-    Name: <input type="text" name="Name">
-    Cash: <input type="text" name="Cash">
-    MobyCoin: <input type="text" name="MobyCoin">
+    Name: <input type="text" name="Name" required>
+    Cash: <input type="text" name="Cash" required>
+    MobyCoin: <input type="text" name="MobyCoin" required>
     <input type="submit" value="Add">
     </form>
     {% if num[0] and num[1] %}{{num[0]+num[1]}}{% endif %}

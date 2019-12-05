@@ -1,9 +1,10 @@
 from flask import *
 import psycopg2 as dbapi2
-import names
 from passlib.hash import pbkdf2_sha256 as hasher
 from flask_login import UserMixin
-    
+from user import User
+from balance import Balance
+
 class Database:
   def __init__(self, connection_string):
     self.connection_string = connection_string
@@ -56,27 +57,17 @@ class Database:
       cursor.execute(sql_command,{'name':balance.name,'cash':balance.cash,'mobycoin':balance.mobyCoin})
       connection.commit()
       cursor.close()
-  def delete_balance(self,balance):
+  def delete_balance(self,balance_id):
     with dbapi2.connect(self.connection_string) as connection:
       cursor = connection.cursor()
-      sql_command_get_id="SELECT ID FROM BALANCE WHERE(NAME = %(name)s AND CASH = %(cash)s AND MOBYCOIN = %(mobycoin)s)"
-      cursor.execute(sql_command_get_id,{'name':balance.name,'cash':balance.cash,'mobycoin':balance.mobyCoin})
-      del_balance_id = cursor.fetchone()
-      cursor.close()
-      cursor = connection.cursor()
       sql_command="DELETE FROM BALANCE WHERE (ID = %(id)s)"
-      cursor.execute(sql_command,{'id':del_balance_id})
+      cursor.execute(sql_command,{'id':balance_id})
       connection.commit()
       cursor.close()
   def update_balance(self,balance):
     with dbapi2.connect(self.connection_string) as connection:
       cursor = connection.cursor()
-      sql_command_get_id="SELECT ID FROM BALANCE WHERE(NAME = %(name)s AND CASH = %(cash)s AND MOBYCOIN = %(mobycoin)s)"
-      cursor.execute(sql_command_get_id,{'name':balance.name,'cash':balance.cash,'mobycoin':balance.mobyCoin})
-      update_balance_id = cursor.fetchone()
-      cursor.close()
-      cursor = connection.cursor()
-      sql_command="UPDATE BALANCE SET NAME=%(id)s,CASH = %(cash)s,MOBYCOIN = %(mobycoin)s WHERE (ID = %(id)s)"
-      cursor.execute(sql_command,{'name':balance.name,'cash':balance.cash,'mobycoin':balance.mobyCoin,'id':update_balance_id})
+      sql_command="UPDATE BALANCE SET NAME=%(name)s,CASH = %(cash)s,MOBYCOIN = %(mobycoin)s WHERE (ID = %(id)s)"
+      cursor.execute(sql_command,{'name':balance.name,'cash':balance.cash,'mobycoin':balance.mobyCoin,'id':balance.id})
       connection.commit()
       cursor.close()
