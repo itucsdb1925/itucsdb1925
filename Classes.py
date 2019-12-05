@@ -78,7 +78,6 @@ class Database:
       sql_command="DELETE FROM BALANCE WHERE (ID = %(id)s)"
       cursor.execute(sql_command,{'id':del_balance_id})
       connection.commit()
-<<<<<<< HEAD
       cursor.close()
   def update_balance(self,balance):
     with dbapi2.connect(self.connection_string) as connection:
@@ -91,6 +90,4 @@ class Database:
       sql_command="UPDATE BALANCE SET NAME=%(id)s,CASH = %(cash)s,MOBYCOIN = %(mobycoin)s WHERE (ID = %(id)s)"
       cursor.execute(sql_command,{'name':balance.name,'cash':balance.cash,'mobycoin':balance.mobyCoin,'id':update_balance_id})
       connection.commit()
-=======
->>>>>>> 97eea31c378a621aa335f17a3c658038a5bfa5cc
       cursor.close()
