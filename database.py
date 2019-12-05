@@ -1,8 +1,7 @@
-from flask import *
+from flask import Flask
 import psycopg2 as dbapi2
 from passlib.hash import pbkdf2_sha256 as hasher
 from flask_login import UserMixin
-from user import User
 from balance import Balance
 
 class Database:
@@ -16,6 +15,7 @@ class Database:
       connection.commit()
       cursor.close()
   def add_user(self,user):
+    user.password = hasher.hash(user.password)
     with dbapi2.connect(self.connection_string) as connection:
       cursor = connection.cursor()
       sql_command="INSERT INTO USERS (USER_NAME,PASSWORD) VALUES (%(user_name)s, %(password)s)"

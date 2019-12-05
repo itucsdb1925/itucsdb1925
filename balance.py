@@ -1,4 +1,3 @@
-from flask import *
 import psycopg2 as dbapi2
 import names
 from passlib.hash import pbkdf2_sha256 as hasher

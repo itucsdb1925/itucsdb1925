@@ -6,8 +6,9 @@
   </head>
   <body>
     <form action="/signin" method="post">
-    Username: <input type="text" name="username">
-    Password: <input type="password" name="password">
+    {{ form.csrf_token }}
+    Username: {{ form.username(required=True, autofocus=True, placeholder='Your Username') }}
+    Password: {{ form.password(required=True, placeholder='Your Password') }}
     <input type="submit" value="Sign In">
     </form>
     <a href="/signup">Sign Up</a>
