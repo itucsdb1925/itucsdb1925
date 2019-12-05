@@ -1,7 +1,12 @@
 from flask import *
 import psycopg2 as dbapi2
+import names
 from passlib.hash import pbkdf2_sha256 as hasher
-from Classes import Balance,Database,User
+from flask_login import UserMixin
+from balance import Balance
+from user import User
+from database import Database
+
 app = Flask(__name__)
 
 @app.route("/signin",methods=["POST","GET"])
@@ -108,5 +113,10 @@ def submit():
 </html>
 """
 
+def create_app():
+    app = Flask(__name__)
+    app.config.from_object("settings")
+
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=8080, debug=True)
+  app = create_app()
+  app.run(host="0.0.0.0", port=8080, debug=True)
