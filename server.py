@@ -34,6 +34,7 @@ def sign_up():
     return redirect("/signin")
   return render_template("signup.html")
 
+<<<<<<< HEAD
 @app.route("/update", methods=["POST","GET"])
 def update(update_id):
   num1 = request.form.get("Cash_update")
@@ -52,6 +53,8 @@ def update(update_id):
     return redirect("/signedin")
   return render_template("update.html")
 
+=======
+>>>>>>> 97eea31c378a621aa335f17a3c658038a5bfa5cc
   
 @app.route("/signedin", methods=["POST","GET"])
 def home_page():
