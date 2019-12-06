@@ -9,7 +9,7 @@ f = open("database_string.txt","r")
 dsn = f.read()
 
 class User(UserMixin):
-  def __init__(self, User_name, Password):
+  def __init__(self, User_name, Password,Balance_id=0):
     self.user_name = User_name
     self.password = Password
     self.active = True
@@ -23,6 +23,5 @@ class User(UserMixin):
 def get_user(user_id):
   database=Database(dsn)
   password = database.get_hashed_password(user_id)[0]
-  print("eeeeeee",password)
   user = User(user_id, password) if password else None
   return user

@@ -8,14 +8,14 @@
     <table style="border: 1px solid black;align-content: center;">
       <tr style="border: 1px solid black;">
         <th style="border: 1px solid black;">Id</th>
-        <th style="border: 1px solid black;">Name</th>
+        <th style="border: 1px solid black;">User_Name</th>
         <th style="border: 1px solid black;">Cash</th>
         <th style="border: 1px solid black;">MobyCoin</th>
       </tr>
       {% for item in balance %}
       <tr style="border: 1px solid black;">
         <td style="border: 1px solid black;text-align: center;">{{item.id}}</td>
-        <td style="border: 1px solid black;text-align: center;">{{item.name}}</td>
+        <td style="border: 1px solid black;text-align: center;">{{item.user_name}}</td>
         <td style="border: 1px solid black;text-align: center;">{{item.cash}}</td>
         <td style="border: 1px solid black;text-align: center;">{{item.mobyCoin}}</td>
         <td>
@@ -35,16 +35,22 @@
       {% endfor %}
     </table>
     <form action="/signout" method="post">
-            <button type="submit" >Bik bksdfiS.O.</button>
+      <button type="submit" >Sign out</button>
+    </form>
+    <!--<form action="/signedin" method="post" style="margin-bottom: 30px">
+      Name: <input type="text" name="Name" required>
+      Cash: <input type="text" name="Cash" required>
+      MobyCoin: <input type="text" name="MobyCoin" required>
+      <input type="submit" value="Add">
+    </form>-->
+    <form action="/signedin" method="post">
+      Cash: <input type="text" name="Cash" required>
+      <input type="submit" value="Buy MobyCoin">
     </form>
     <form action="/signedin" method="post">
-    Name: <input type="text" name="Name" required>
-    Cash: <input type="text" name="Cash" required>
-    MobyCoin: <input type="text" name="MobyCoin" required>
-    <input type="submit" value="Add">
+      MobyCoin: <input type="text" name="MobyCoin" required>
+      <input type="submit" value="Sell MobyCoin">
     </form>
-    {% if num[0] and num[1] %}{{num[0]+num[1]}}{% endif %}
-    <p>
   </body>
 </html>
 {% endblock %}

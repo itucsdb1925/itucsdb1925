@@ -10,7 +10,7 @@ class Database:
   def create_user(self):
     with dbapi2.connect(self.connection_string) as connection:
       cursor = connection.cursor()
-      sql_command="CREATE TABLE IF NOT EXISTS USERS (USER_NAME VARCHAR(100) PRIMARY KEY, PASSWORD VARCHAR(1000))"
+      sql_command="CREATE TABLE IF NOT EXISTS USERS (USER_NAME VARCHAR(100) PRIMARY KEY, PASSWORD VARCHAR(100))"
       cursor.execute(sql_command)
       connection.commit()
       cursor.close()
@@ -36,16 +36,16 @@ class Database:
   def create_balance(self):
     with dbapi2.connect(self.connection_string) as connection:
       cursor = connection.cursor()
-      sql_command="CREATE TABLE IF NOT EXISTS BALANCE (ID SERIAL PRIMARY KEY, NAME VARCHAR(100), CASH FLOAT, MOBYCOIN FLOAT)"
+      sql_command="CREATE TABLE IF NOT EXISTS BALANCE (ID SERIAL PRIMARY KEY, USER_NAME VARCHAR(100) REFERENCES USERS(USER_NAME),CASH FLOAT, MOBYCOIN FLOAT)"
       cursor.execute(sql_command)
       connection.commit()
       cursor.close()
-  def get_balance(self,balance_id):
+  def get_balance(self,user_name):
     balance_data = []
     with dbapi2.connect(self.connection_string) as connection:
       cursor = connection.cursor()
-      sql_command="SELECT * FROM BALANCE WHERE(ID = %(id)s)"
-      cursor.execute(sql_command,{'id':balance_id})
+      sql_command="SELECT * FROM BALANCE WHERE(USER_NAME = %(user_name)s)"
+      cursor.execute(sql_command,{'user_name':user_name})
       balance_data = cursor.fetchone()
       connection.commit()
       cursor.close()
@@ -53,8 +53,8 @@ class Database:
   def add_balance(self,balance):
     with dbapi2.connect(self.connection_string) as connection:
       cursor = connection.cursor()
-      sql_command="INSERT INTO BALANCE (NAME,CASH,MOBYCOIN) VALUES (%(name)s, %(cash)s, %(mobycoin)s)"
-      cursor.execute(sql_command,{'name':balance.name,'cash':balance.cash,'mobycoin':balance.mobyCoin})
+      sql_command="INSERT INTO BALANCE (USER_NAME,CASH,MOBYCOIN) VALUES ( %(user_name)s, %(cash)s, %(mobycoin)s)"
+      cursor.execute(sql_command,{'user_name':balance.user_name,'cash':balance.cash,'mobycoin':balance.mobyCoin})
       connection.commit()
       cursor.close()
   def delete_balance(self,balance_id):
@@ -67,7 +67,21 @@ class Database:
   def update_balance(self,balance):
     with dbapi2.connect(self.connection_string) as connection:
       cursor = connection.cursor()
-      sql_command="UPDATE BALANCE SET NAME=%(name)s,CASH = %(cash)s,MOBYCOIN = %(mobycoin)s WHERE (ID = %(id)s)"
-      cursor.execute(sql_command,{'name':balance.name,'cash':balance.cash,'mobycoin':balance.mobyCoin,'id':balance.id})
+      sql_command="UPDATE BALANCE SET CASH = %(cash)s,MOBYCOIN = %(mobycoin)s WHERE (ID = %(id)s)"
+      cursor.execute(sql_command,{'cash':balance.cash,'mobycoin':balance.mobyCoin,'id':balance.id})
       connection.commit()
       cursor.close()
+  def buy_mobycoin(self,balance,cash):
+    if(cash>balance.cash):
+      return False
+    added_coin = cash / 10
+    balance.mobyCoin += added_coin
+    balance.cash -= cash
+    self.update_balance(balance)
+  def sell_mobycoin(self,balance,mobycoin):
+    if(mobycoin>balance.mobyCoin):
+      return False
+    added_cash = mobycoin*10
+    balance.mobyCoin -= mobycoin
+    balance.cash += added_cash
+    self.update_balance(balance)
