@@ -44,12 +44,24 @@
       <input type="submit" value="Add">
     </form>-->
     <form action="/signedin" method="post">
-      Cash: <input type="text" name="Cash" required>
+      Cash: <input type="text" name="CashtoMobyCoin" required>
       <input type="submit" value="Buy MobyCoin">
     </form>
     <form action="/signedin" method="post">
-      MobyCoin: <input type="text" name="MobyCoin" required>
+      MobyCoin: <input type="text" name="MobyCointoCash" required>
       <input type="submit" value="Sell MobyCoin">
+    </form>
+    <p>Transfer Cash</p>
+    <form action="/signedin" method="post">
+      To: <input type="text" name="TransferNameCash" required>
+      Cash: <input type="text" name="TransferAmountCash" required>
+      <input type="submit" value="Transfer">
+    </form>
+    <p>Transfer MobyCoin</p>
+    <form action="/signedin" method="post">
+      To: <input type="text" name="TransferNameMobyCoin" required>
+      MobyCoin: <input type="text" name="TransferAmountMobyCoin" required>
+      <input type="submit" value="Transfer">
     </form>
   </body>
 </html>

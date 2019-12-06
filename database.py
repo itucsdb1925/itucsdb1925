@@ -85,3 +85,17 @@ class Database:
     balance.mobyCoin -= mobycoin
     balance.cash += added_cash
     self.update_balance(balance)
+  def transfer_between_users_cash(self,balance_src,balance_dst,cash):
+    if(cash>balance_src.cash):
+      return False
+    balance_src.cash -= cash
+    balance_dst.cash += cash
+    self.update_balance(balance_src)
+    self.update_balance(balance_dst)
+  def transfer_between_users_mobycoin(self,balance_src,balance_dst,mobycoin):
+    if(mobycoin>balance_src.mobyCoin):
+      return False
+    balance_src.mobyCoin -= mobycoin
+    balance_dst.mobyCoin += mobycoin
+    self.update_balance(balance_src)
+    self.update_balance(balance_dst)

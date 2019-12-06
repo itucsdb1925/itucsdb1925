@@ -22,6 +22,6 @@ class User(UserMixin):
     return self.active
 def get_user(user_id):
   database=Database(dsn)
-  password = database.get_hashed_password(user_id)[0]
+  password = database.get_hashed_password(user_id)[0] if database.get_hashed_password(user_id) else None
   user = User(user_id, password) if password else None
   return user

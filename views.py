@@ -46,7 +46,7 @@ def sign_up():
     database.add_user(user)
     balance=Balance(0,username)
     database.add_balance(balance)
-    next_page = request.args.get("next", url_for("sign_in"))
+    next_page = request.args.get("next", url_for("home_page"))
     return redirect(next_page)
   return render_template("signup.html")
 
@@ -73,23 +73,53 @@ def update():
 def home_page():
   user_id = current_user.get_id()
   user = get_user(user_id)
-  cash = request.form.get("Cash")
-  mobycoin = request.form.get("MobyCoin")
+  cash_to_mobyCoin = request.form.get("CashtoMobyCoin")
+  mobyCoin_to_cash = request.form.get("MobyCointoCash")
+
+
+  transfer_name_cash = request.form.get("TransferNameCash")
+  transfer_amount_cash = request.form.get("TransferAmountCash")
+
+
+
+
+
+
+  transfer_name_mobyCoin = request.form.get("TransferNameMobyCoin")
+  transfer_amount_mobyCoin = request.form.get("TransferAmountMobyCoin")
+
+
+
   #given_name = request.form.get("Name")
   delete_id = request.form.get("id_to_delete")
   update_id = request.form.get("id_to_update")
   database=Database(dsn)
   database.create_balance()
-  if(cash):
-    cash=float(cash)
+  if(cash_to_mobyCoin):
+    cash_to_mobyCoin=float(cash_to_mobyCoin)
     if(user):
       balance=database.get_balance(user_id)
-      database.buy_mobycoin(balance,cash)
-  if(mobycoin):
-    mobycoin=float(mobycoin)
+      database.buy_mobycoin(balance,cash_to_mobyCoin)
+  if(mobyCoin_to_cash):
+    mobyCoin_to_cash=float(mobyCoin_to_cash)
     if(user):
       balance=database.get_balance(user_id)
-      database.sell_mobycoin(balance,mobycoin)
+      database.sell_mobycoin(balance,mobyCoin_to_cash)
+
+  if(transfer_name_cash):
+    transfer_amount_cash=float(transfer_amount_cash)
+    if(user):
+      balance_src=database.get_balance(user_id)
+      balance_dst=database.get_balance(transfer_name_cash)
+      database.transfer_between_users_cash(balance_src,balance_dst,transfer_amount_cash)
+
+  if(transfer_name_mobyCoin):
+    transfer_amount_mobyCoin=float(transfer_amount_mobyCoin)
+    if(user):
+      balance_src=database.get_balance(user_id)
+      balance_dst=database.get_balance(transfer_name_mobyCoin)
+      database.transfer_between_users_mobycoin(balance_src,balance_dst,transfer_amount_mobyCoin)
+
   if(delete_id):
     database.delete_balance(delete_id)
   """if(update_id):
@@ -113,4 +143,4 @@ def home_page():
   connection.commit()
   cursor.close()
   connection.close()
-  return render_template("index.html",balance=balance_list,num=(cash,mobycoin))
+  return render_template("index.html",balance=balance_list)
