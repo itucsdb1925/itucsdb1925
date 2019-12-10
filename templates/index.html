@@ -3,9 +3,26 @@
 <html lang="en">
   <head>
     <meta charset="utf-8"/>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
   </head>
   <body>
-    <table style="border: 1px solid black;align-content: center;">
+    <nav class="navbar navbar-expand-md navbar-dark fixed-top" style="background-color: rgba(0, 89, 179,0.85)" >
+        <!--<a class="navbar-brand" asp-action="Index" method="post">Home</a>-->
+        <div class="collapse navbar-collapse">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item-active">
+                    <a class="nav-link" href="/signedin" method="post">Home</a>
+                </li>
+            </ul>
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item navbar-right">
+                    <a class="nav-link" href="/signout" method="post">Sign Out</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    
+    <table class="mx-auto" style="border: 1px solid black;align-content: center;margin-top:100px">
       <tr style="border: 1px solid black;">
         <th style="border: 1px solid black;">Id</th>
         <th style="border: 1px solid black;">User_Name</th>
@@ -30,39 +47,74 @@
             <button type="submit" >Update</button>
           </form>
         </td>
-
       </tr>
       {% endfor %}
     </table>
-    <form action="/signout" method="post">
+    <!--<form action="/signout" method="post">
       <button type="submit" >Sign out</button>
-    </form>
+    </form>-->
     <!--<form action="/signedin" method="post" style="margin-bottom: 30px">
       Name: <input type="text" name="Name" required>
       Cash: <input type="text" name="Cash" required>
       MobyCoin: <input type="text" name="MobyCoin" required>
       <input type="submit" value="Add">
     </form>-->
-    <form action="/signedin" method="post">
-      Cash: <input type="text" name="CashtoMobyCoin" required>
-      <input type="submit" value="Buy MobyCoin">
+
+
+    <div style="margin-top: 50px">
+    <div class="card card-body" style="float: left;margin-left: 100px">
+    <h5 style="text-align: center" class="card-title">Money Commerce</h5>
+    <form style="margin-top: 15px" action="/signedin" method="post">
+      <div class="form-row align-items-center">
+        <div class="col-auto">
+          <input class="form-control mb-2" type="text" name="CashtoMobyCoin"placeholder="Cash" required>
+        </div>
+        <div class="col-auto">
+          <input type="submit" class="btn btn-primary mb-2" value="Buy MobyCoin">
+        </div>
+      </div>
     </form>
-    <form action="/signedin" method="post">
-      MobyCoin: <input type="text" name="MobyCointoCash" required>
-      <input type="submit" value="Sell MobyCoin">
+    <form style="margin-top: 15px" action="/signedin" method="post">
+      <div class="form-row align-items-center">
+        <div class="col-auto">
+          <input class="form-control mb-2" type="text" name="MobyCointoCash"placeholder="MobyCoin" required>
+        </div>
+        <div class="col-auto">
+          <input type="submit" class="btn btn-primary mb-2" value="Sell MobyCoin">
+        </div>
+      </div>
     </form>
-    <p>Transfer Cash</p>
-    <form action="/signedin" method="post">
-      To: <input type="text" name="TransferNameCash" required>
-      Cash: <input type="text" name="TransferAmountCash" required>
-      <input type="submit" value="Transfer">
+  </div>
+    <div class="card card-body" style="float: right;margin-right: 100px">
+    <h5 style="text-align: center" class="card-title">Money Transfers</h5>
+    <form style="margin-top: 15px" action="/signedin" method="post">
+      <div class="form-row align-items-center">
+        <div class="col-auto">
+          <input class="form-control mb-2" type="text" name="TransferNameCash"placeholder="To whom" required>
+        </div>
+        <div class="col-auto">
+          <input class="form-control mb-2" type="text" name="TransferAmountCash"placeholder="Cash" required>
+        </div>
+        <div class="col-auto">
+          <input type="submit" class="btn btn-primary mb-2" value="Transfer Cash">
+        </div>
+      </div>
     </form>
-    <p>Transfer MobyCoin</p>
-    <form action="/signedin" method="post">
-      To: <input type="text" name="TransferNameMobyCoin" required>
-      MobyCoin: <input type="text" name="TransferAmountMobyCoin" required>
-      <input type="submit" value="Transfer">
+    <form style="margin-top: 15px" action="/signedin" method="post">
+      <div class="form-row align-items-center">
+        <div class="col-auto">
+          <input class="form-control mb-2" type="text" name="TransferNameMobyCoin"placeholder="To whom" required>
+        </div>
+        <div class="col-auto">
+          <input class="form-control mb-2" type="text" name="TransferAmountMobyCoin"placeholder="MobyCoin" required>
+        </div>
+        <div class="col-auto">
+          <input type="submit" class="btn btn-primary mb-2" value="Transfer MobyCoin">
+        </div>
+      </div>
     </form>
+  </div>
+  </div>
   </body>
 </html>
 {% endblock %}
