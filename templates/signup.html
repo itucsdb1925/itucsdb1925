@@ -3,13 +3,15 @@
 <html lang="en">
   <head>
     <meta charset="utf-8"/>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
   </head>
-  <body>
-    <form action="/signup" method="post">
-    Username: <input type="text" name="username">
-    Password: <input type="password" name="password">
-    <input type="submit" value="Sign Up">
+  <body style="margin-left: auto;margin-right: auto;width:500px">
+    <form class="text-center border border-light p-5" action="/signup" method="post">
+      <input class='form-control mb-4' type="text" name="username" placeholder='Username'>
+      <input class='form-control mb-4' type="password" name="password" placeholder='Password'>
+      <input class="btn btn-info btn-block my-4" type="submit" value="Sign Up">
     </form>
+    <div style="text-align: center; margin-top: -25px"><p>You already have an account? </p><a style="font-size: 18px" href="/" class="h4 mb-4">Sign In</a></div>
   </body>
 </html>
 {% endblock %}
