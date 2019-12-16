@@ -51,7 +51,7 @@
     <form style="margin-top: 15px" action="/signedin" method="post">
       <div class="form-row align-items-center">
         <div class="col-auto">
-          <input class="form-control mb-2" type="number" min="0" name="CashtoMobyCoin"placeholder="Cash" required>
+          <input class="form-control mb-2" type="number" min="0" step="0.01" name="CashtoMobyCoin"placeholder="Cash" required>
         </div>
         <div class="col-auto">
           <input type="submit" class="btn btn-primary mb-2" value="Buy MobyCoin">
@@ -61,7 +61,7 @@
     <form style="margin-top: 15px" action="/signedin" method="post">
       <div class="form-row align-items-center">
         <div class="col-auto">
-          <input class="form-control mb-2" type="number" min="0" name="MobyCointoCash"placeholder="MobyCoin" required>
+          <input class="form-control mb-2" type="number" min="0" step="0.01" name="MobyCointoCash"placeholder="MobyCoin" required>
         </div>
         <div class="col-auto">
           <input type="submit" class="btn btn-primary mb-2" value="Sell MobyCoin">
@@ -77,7 +77,7 @@
           <input class="form-control mb-2" type="text" name="TransferNameCash"placeholder="To whom" required>
         </div>
         <div class="col-auto">
-          <input class="form-control mb-2" type="number" min="0" name="TransferAmountCash"placeholder="Cash" required>
+          <input class="form-control mb-2" type="number" min="0" step="0.01" name="TransferAmountCash"placeholder="Cash" required>
         </div>
         <div class="col-auto">
           <input type="submit" class="btn btn-primary mb-2" value="Transfer Cash">
@@ -90,7 +90,7 @@
           <input class="form-control mb-2" type="text" name="TransferNameMobyCoin"placeholder="To whom" required>
         </div>
         <div class="col-auto">
-          <input class="form-control mb-2" type="number" min="0" name="TransferAmountMobyCoin"placeholder="MobyCoin" required>
+          <input class="form-control mb-2" type="number" min="0" step="0.01" name="TransferAmountMobyCoin"placeholder="MobyCoin" required>
         </div>
         <div class="col-auto">
           <input type="submit" class="btn btn-primary mb-2" value="Transfer MobyCoin">
@@ -103,7 +103,7 @@
     <form style="margin-top: 15px" action="/signedin" method="post">
       <div class="form-row align-items-center">
         <div class="col-auto">
-          <input class="form-control mb-2" type="number" min="0" name="BuyCash"placeholder="Cash Amount" required>
+          <input class="form-control mb-2" type="number" min="0" step="0.01" name="BuyCash"placeholder="Cash Amount" required>
         </div>
         <div class="col-auto">
           <input type="submit" class="btn btn-primary mb-2" value="Add Cash">
