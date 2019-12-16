@@ -5,8 +5,8 @@ from flask_login import UserMixin
 from database import Database
 
 import os
-dsn = """user='xxaovoiw' password='7lMq2qIMqQ4R9-Rl6Y9KNlHNzKL1z3P3' host='rogue.db.elephantsql.com' dbname='xxaovoiw'"""
-
+f = open("database_string.txt","r")
+dsn = f.read()
 class User(UserMixin):
   def __init__(self, User_name, Password,Balance_id=0):
     self.user_name = User_name

@@ -9,10 +9,9 @@ from request import MobyCoin_Requests,Cash_Requests
 from forms import SigninForm
 from flask_login import LoginManager,login_user,logout_user,login_required,current_user
 import os
-"""f = open("database_string.txt","r")
-dsn = f.read()"""
+f = open("database_string.txt","r")
+dsn = f.read()
 
-dsn = """user='xxaovoiw' password='7lMq2qIMqQ4R9-Rl6Y9KNlHNzKL1z3P3' host='rogue.db.elephantsql.com' dbname='xxaovoiw'"""
 #@app.route("/signin",methods=["POST","GET"])
 def sign_in():
   form = SigninForm()
