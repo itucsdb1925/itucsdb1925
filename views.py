@@ -4,6 +4,7 @@ from balance import Balance
 from user import User,get_user
 from database import Database
 from employees import Employees
+from transaction import Cash_Transactions,MobyCoin_Transactions
 from forms import SigninForm
 from flask_login import LoginManager,login_user,logout_user,login_required,current_user
 
@@ -78,16 +79,10 @@ def employees_page():
 
   employer_name = user_id
   employee_name_to_add = request.form.get("EmployeeName")
-
-
   pay_salary_cash = request.form.get("PaySalaryCash")
   pay_salary_mobyCoin = request.form.get("PaySalaryMobyCoin")
-
   database=Database(dsn)
-
   all_employees = database.get_employee(employer_name)
-
-
   if(pay_salary_cash):
     balance_employer = database.get_balance(employer_name)
     if(balance_employer.cash >= (float(pay_salary_cash)*len(all_employees))):
@@ -134,7 +129,6 @@ def employees_page():
 def home_page():
   user_id = current_user.get_id()
   user = get_user(user_id)
-
   cash_to_mobyCoin = request.form.get("CashtoMobyCoin")
   mobyCoin_to_cash = request.form.get("MobyCointoCash")
 
@@ -167,6 +161,9 @@ def home_page():
       balance_src=database.get_balance(user_id)
       balance_dst=database.get_balance(transfer_name_cash)
       database.transfer_between_users_cash(balance_src,balance_dst,transfer_amount_cash)
+      database.create_cash_transactions()
+      cash_transaction = Cash_Transactions(balance_src.user_name,balance_dst.user_name,transfer_amount_cash)
+      database.add_cash_transaction(cash_transaction)
 
   if(transfer_name_mobyCoin):
     transfer_amount_mobyCoin=float(transfer_amount_mobyCoin)
@@ -174,6 +171,9 @@ def home_page():
       balance_src=database.get_balance(user_id)
       balance_dst=database.get_balance(transfer_name_mobyCoin)
       database.transfer_between_users_mobycoin(balance_src,balance_dst,transfer_amount_mobyCoin)
+      database.create_mobyCoin_transactions()
+      mobyCoin_transaction = MobyCoin_Transactions(balance_src.user_name,balance_dst.user_name,transfer_amount_mobyCoin)
+      database.add_mobyCoin_transaction(mobyCoin_transaction)
 
   if(delete_id):
     database.delete_balance(delete_id)
