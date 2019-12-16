@@ -8,7 +8,7 @@ from transaction import Cash_Transactions,MobyCoin_Transactions
 from request import MobyCoin_Requests,Cash_Requests
 from forms import SigninForm
 from flask_login import LoginManager,login_user,logout_user,login_required,current_user
-
+import os
 """f = open("database_string.txt","r")
 dsn = f.read()"""
 

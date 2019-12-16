@@ -4,6 +4,7 @@ from passlib.hash import pbkdf2_sha256 as hasher
 from flask_login import UserMixin
 from database import Database
 
+import os
 dsn = os.getenv("DATABASE_URL")
 
 class User(UserMixin):
