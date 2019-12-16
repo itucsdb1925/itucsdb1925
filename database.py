@@ -118,14 +118,14 @@ class Database:
       cursor.execute(sql_command,{'sender_name':cash_transaction.sender_name,'receiver_name':cash_transaction.receiver_name,'cash':cash_transaction.cash})
       connection.commit()
       cursor.close()
-  def get_cash_transaction(self,user_name):
+  def get_cash_transactions(self,user_name):
     transaction_data = []
     transactions = []
     with dbapi2.connect(self.connection_string) as connection:
       cursor = connection.cursor()
       sql_command="SELECT * FROM CASH_TRANSACTION WHERE(SENDER_NAME = %(user_name)s OR RECEIVER_NAME = %(user_name)s)"
       cursor.execute(sql_command,{'user_name':user_name})
-      balance_data = cursor.fetchall()
+      transaction_data = cursor.fetchall()
       connection.commit()
       cursor.close()
     for i in transaction_data:
@@ -154,7 +154,7 @@ class Database:
       cursor = connection.cursor()
       sql_command="SELECT * FROM MOBYCOIN_TRANSACTION WHERE(SENDER_NAME = %(user_name)s OR RECEIVER_NAME = %(user_name)s)"
       cursor.execute(sql_command,{'user_name':user_name})
-      balance_data = cursor.fetchall()
+      transaction_data = cursor.fetchall()
       connection.commit()
       cursor.close()
     for i in transaction_data:
@@ -182,18 +182,28 @@ class Database:
       connection.commit()
       cursor.close()
   def get_cash_requests(self,user_name):
-    transaction_data = []
-    transactions = []
+    request_data = []
+    requests = []
     with dbapi2.connect(self.connection_string) as connection:
       cursor = connection.cursor()
-      sql_command="SELECT * FROM CASH_REQUESTS WHERE(SENDER_NAME = %(user_name)s OR RECEIVER_NAME = %(user_name)s)"
+      sql_command="SELECT * FROM CASH_REQUESTS WHERE(SENDER_NAME = %(user_name)s )"
       cursor.execute(sql_command,{'user_name':user_name})
-      balance_data = cursor.fetchall()
+      request_data = cursor.fetchall()
       connection.commit()
       cursor.close()
-    for i in transaction_data:
-      transactions.append(Cash_Requests(i[0],i[1],i[2],i[3],i[4]))
-    return transactions
+    for i in request_data:
+      requests.append(Cash_Requests(i[0],i[1],i[2],i[3],i[4]))
+    return requests
+  def get_cash_request(self,request_id):
+    request_data = []
+    with dbapi2.connect(self.connection_string) as connection:
+      cursor = connection.cursor()
+      sql_command="SELECT * FROM CASH_REQUESTS WHERE(ID = %(request_id)s )"
+      cursor.execute(sql_command,{'request_id':request_id})
+      request_data = cursor.fetchone()
+      connection.commit()
+      cursor.close()
+    return Cash_Requests(request_data[0],request_data[1],request_data[2],request_data[3],request_data[4])
   def create_mobyCoin_requests(self):
     with dbapi2.connect(self.connection_string) as connection:
       cursor = connection.cursor()
@@ -211,18 +221,35 @@ class Database:
       connection.commit()
       cursor.close()
   def get_mobyCoin_requests(self,user_name):
-    transaction_data = []
-    transactions = []
+    request_data = []
+    requests = []
     with dbapi2.connect(self.connection_string) as connection:
       cursor = connection.cursor()
-      sql_command="SELECT * FROM MOBYCOIN_REQUESTS WHERE(SENDER_NAME = %(user_name)s OR RECEIVER_NAME = %(user_name)s)"
+      sql_command="SELECT * FROM MOBYCOIN_REQUESTS WHERE(SENDER_NAME = %(user_name)s)"
       cursor.execute(sql_command,{'user_name':user_name})
-      balance_data = cursor.fetchall()
+      request_data = cursor.fetchall()
       connection.commit()
       cursor.close()
-    for i in transaction_data:
-      transactions.append(MobyCoin_Requests(i[0],i[1],i[2],i[3],i[4]))
-    return transactions
+    for i in request_data:
+      requests.append(MobyCoin_Requests(i[0],i[1],i[2],i[3],i[4]))
+    return requests
+  def get_mobyCoin_request(self,request_id):
+    request_data = []
+    with dbapi2.connect(self.connection_string) as connection:
+      cursor = connection.cursor()
+      sql_command="SELECT * FROM MOBYCOIN_REQUESTS WHERE(ID = %(request_id)s)"
+      cursor.execute(sql_command,{'request_id':request_id})
+      request_data = cursor.fetchone()
+      connection.commit()
+      cursor.close()
+    return MobyCoin_Requests(request_data[0],request_data[1],request_data[2],request_data[3],request_data[4])
+  def delete_mobyCoin_request(self,request_id):
+    with dbapi2.connect(self.connection_string) as connection:
+      cursor = connection.cursor()
+      sql_command="DELETE FROM MOBYCOIN_REQUESTS WHERE (ID = %(id)s)"
+      cursor.execute(sql_command,{'id':request_id})
+      connection.commit()
+      cursor.close()
   def salary_payment_cash(self,balance_src,balance_dst,cash):
     balance_src.cash -= cash
     balance_dst.cash += cash
@@ -240,6 +267,7 @@ class Database:
     balance.mobyCoin += added_coin
     balance.cash -= cash
     self.update_balance(balance)
+    return True
   def buy_cash(self,balance,cash_amount):
     balance.cash += cash_amount
     self.update_balance(balance)
@@ -250,6 +278,7 @@ class Database:
     balance.mobyCoin -= mobycoin
     balance.cash += added_cash
     self.update_balance(balance)
+    return True
   def transfer_between_users_cash(self,balance_src,balance_dst,cash):
     if(cash>balance_src.cash):
       return False
@@ -257,6 +286,7 @@ class Database:
     balance_dst.cash += cash
     self.update_balance(balance_src)
     self.update_balance(balance_dst)
+    return True
   def transfer_between_users_mobycoin(self,balance_src,balance_dst,mobycoin):
     if(mobycoin>balance_src.mobyCoin):
       return False
@@ -264,3 +294,4 @@ class Database:
     balance_dst.mobyCoin += mobycoin
     self.update_balance(balance_src)
     self.update_balance(balance_dst)
+    return True

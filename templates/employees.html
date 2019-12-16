@@ -15,6 +15,12 @@
                 </li>
             </ul>
             <ul class="navbar-nav ml-auto">
+              <li class="nav-item">
+                    <a class="nav-link" href="/request" method="post">Requests</a>
+                </li>
+              <li class="nav-item">
+                    <a class="nav-link" href="/transactions" method="post">Past Transactions</a>
+                </li>
                 <li class="nav-item">
                     <a class="nav-link" href="/employees" method="post">Employees</a>
                 </li>
@@ -60,7 +66,7 @@
   <form style="margin-top: 15px" action="/employees" method="post">
       <div class="form-row align-items-center">
         <div class="col-auto">
-          <input class="form-control mb-2" type="text" name="PaySalaryCash"placeholder="Pay With Cash" required>
+          <input class="form-control mb-2" type="number" min="0" name="PaySalaryCash"placeholder="Pay With Cash" required>
         </div>
         <div class="col-auto">
           <input type="submit" class="btn btn-primary mb-2" value="Pay Salary">
@@ -70,7 +76,7 @@
   <form style="margin-top: 15px" action="/employees" method="post">
       <div class="form-row align-items-center">
         <div class="col-auto">
-          <input class="form-control mb-2" type="text" name="PaySalaryMobyCoin"placeholder="Pay With MobyCoin" required>
+          <input class="form-control mb-2" type="number" min="0" name="PaySalaryMobyCoin"placeholder="Pay With MobyCoin" required>
         </div>
         <div class="col-auto">
           <input type="submit" class="btn btn-primary mb-2" value="Pay Salary">

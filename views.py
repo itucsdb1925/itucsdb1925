@@ -5,6 +5,7 @@ from user import User,get_user
 from database import Database
 from employees import Employees
 from transaction import Cash_Transactions,MobyCoin_Transactions
+from request import MobyCoin_Requests,Cash_Requests
 from forms import SigninForm
 from flask_login import LoginManager,login_user,logout_user,login_required,current_user
 
@@ -21,7 +22,6 @@ def sign_in():
     database.create_balance()
     database.create_user()
     database.create_employees()
-    print(user.user_name,user.password)
     if(username and password):
       if(user.password):
         if(database.verify_user(password,user.password)):
@@ -71,6 +71,76 @@ def update():
     database.update_balance(update_balance)
     return redirect("/signedin")
   return render_template("update.html",update_id=update_id)
+
+@login_required
+def transaction_page():
+  user_id = current_user.get_id()
+  database=Database(dsn)
+  cash_transactions = database.get_cash_transactions(user_id)
+  mobyCoin_transactions = database.get_mobyCoin_transactions(user_id)
+  print(cash_transactions)
+  return render_template("transactions.html",cash_transactions=cash_transactions,mobyCoin_transactions=mobyCoin_transactions)
+
+@login_required
+def request_page():
+  user_id = current_user.get_id()
+  user = get_user(user_id)
+
+  sender_name_cash = request.form.get("SenderNameCash")
+  description_cash = request.form.get("DescriptionCash")
+  cash = request.form.get("Cash")
+
+  sender_name_mobyCoin = request.form.get("SenderNameMobyCoin")
+  description_mobyCoin = request.form.get("DescriptionMobyCoin")
+  mobyCoin = request.form.get("MobyCoin")
+
+  accept_request_id_mobyCoin = request.form.get("accept_request_id_mobyCoin")
+  decline_request_id_mobyCoin = request.form.get("decline_request_id_mobyCoin")
+  accept_request_id_cash = request.form.get("accept_request_id_cash")
+  decline_request_id_cash = request.form.get("decline_request_id_cash")
+  database=Database(dsn)
+  database.create_cash_requests();
+  database.create_mobyCoin_requests();
+  
+
+
+  if(cash):
+    cash_request=Cash_Requests(0,sender_name_cash,user_id,cash,description_cash)
+    database.create_cash_requests()
+    database.add_cash_request(cash_request)
+  if(mobyCoin):
+    mobyCoin_request=MobyCoin_Requests(0,sender_name_mobyCoin,user_id,mobyCoin,description_mobyCoin)
+    database.create_mobyCoin_requests()
+    database.add_mobyCoin_request(mobyCoin_request)
+  if(accept_request_id_cash):
+    cash_request = database.get_cash_request(accept_request_id_cash)
+    balance_src = database.get_balance(cash_request.sender_name)
+    balance_dst = database.get_balance(cash_request.receiver_name)
+    requested_cash = cash_request.cash
+    if(database.transfer_between_users_cash(balance_src,balance_dst,requested_cash)):
+      database.create_cash_transactions()
+      cash_transaction = Cash_Transactions(0,balance_src.user_name,balance_dst.user_name,requested_cash)
+      database.add_cash_transaction(cash_transaction)
+      database.delete_cash_request(accept_request_id_cash)
+  if(decline_request_id_cash):
+    database.delete_cash_request(decline_request_id_cash)
+
+  if(accept_request_id_mobyCoin):
+    mobyCoin_request = database.get_mobyCoin_request(accept_request_id_mobyCoin)
+    balance_src = database.get_balance(mobyCoin_request.sender_name)
+    balance_dst = database.get_balance(mobyCoin_request.receiver_name)
+    requested_mobyCoin = mobyCoin_request.mobyCoin
+    if(database.transfer_between_users_mobycoin(balance_src,balance_dst,requested_mobyCoin)):
+      database.create_mobyCoin_transactions()
+      mobyCoin_transaction = MobyCoin_Transactions(0,balance_src.user_name,balance_dst.user_name,requested_mobyCoin)
+      database.add_mobyCoin_transaction(mobyCoin_transaction)
+      database.delete_mobyCoin_request(accept_request_id_mobyCoin)
+  if(decline_request_id_mobyCoin):
+    database.delete_mobyCoin_request(decline_request_id_mobyCoin)
+
+  past_cash_requests=database.get_cash_requests(user_id)
+  past_mobyCoin_requests=database.get_mobyCoin_requests(user_id)
+  return render_template("request.html",past_cash_requests=past_cash_requests,past_mobyCoin_requests=past_mobyCoin_requests)
 
 @login_required
 def employees_page():

@@ -1,0 +1,64 @@
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-md navbar-dark fixed-top" style="background-color: rgba(0, 89, 179,0.85)" >
+        <!--<a class="navbar-brand" asp-action="Index" method="post">Home</a>-->
+        <div class="collapse navbar-collapse">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item-active">
+                    <a class="nav-link" href="/signedin" method="post">Home</a>
+                </li>
+            </ul>
+            <ul class="navbar-nav ml-auto">
+              <li class="nav-item">
+                    <a class="nav-link" href="/request" method="post">Requests</a>
+                </li>
+              <li class="nav-item">
+                    <a class="nav-link" href="/transactions" method="post">Past Transactions</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/employees" method="post">Employees</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/signout" method="post">Sign Out</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <table class="table-striped" style="float:left;margin-left: 100px;border: 1px solid black;align-content: center;margin-top:100px">
+      <tr style="border: 1px solid black;">
+        <th style="border: 1px solid black;">Sender</th>
+        <th style="border: 1px solid black;">Receiver</th>
+        <th style="border: 1px solid black;">Cash Transaction</th>
+      </tr>
+      {% for item in cash_transactions %}
+      <tr style="border: 1px solid black;">
+        <td style="border: 1px solid black;text-align: center;">{{item.sender_name}}</td>
+        <td style="border: 1px solid black;text-align: center;">{{item.receiver_name}}</td>
+        <td style="border: 1px solid black;text-align: center;">{{item.cash}}</td>
+      </tr>
+      {% endfor %}
+    </table>
+    <table class="table-striped" style="float:left;margin-left: 100px;border: 1px solid black;align-content: center;margin-top:100px">
+      <tr style="border: 1px solid black;">
+        <th style="border: 1px solid black;">Sender</th>
+        <th style="border: 1px solid black;">Receiver</th>
+        <th style="border: 1px solid black;">MobyCoin Transaction</th>
+      </tr>
+      {% for item in mobyCoin_transactions %}
+      <tr style="border: 1px solid black;">
+        <td style="border: 1px solid black;text-align: center;">{{item.sender_name}}</td>
+        <td style="border: 1px solid black;text-align: center;">{{item.receiver_name}}</td>
+        <td style="border: 1px solid black;text-align: center;">{{item.mobyCoin}}</td>
+      </tr>
+      {% endfor %}
+    </table>
+    
+  </body>
+</html>
+{% endblock %}
