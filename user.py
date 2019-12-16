@@ -1,6 +1,5 @@
 from flask import Flask
 import psycopg2 as dbapi2
-import names
 from passlib.hash import pbkdf2_sha256 as hasher
 from flask_login import UserMixin
 from database import Database
