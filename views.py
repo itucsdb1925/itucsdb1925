@@ -12,7 +12,7 @@ import os
 """f = open("database_string.txt","r")
 dsn = f.read()"""
 
-dsn = os.getenv("DATABASE_URL")
+dsn = """user='xxaovoiw' password='7lMq2qIMqQ4R9-Rl6Y9KNlHNzKL1z3P3' host='rogue.db.elephantsql.com' dbname='xxaovoiw'"""
 #@app.route("/signin",methods=["POST","GET"])
 def sign_in():
   form = SigninForm()

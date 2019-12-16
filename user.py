@@ -5,7 +5,7 @@ from flask_login import UserMixin
 from database import Database
 
 import os
-dsn = os.getenv("DATABASE_URL")
+dsn = """user='xxaovoiw' password='7lMq2qIMqQ4R9-Rl6Y9KNlHNzKL1z3P3' host='rogue.db.elephantsql.com' dbname='xxaovoiw'"""
 
 class User(UserMixin):
   def __init__(self, User_name, Password,Balance_id=0):
