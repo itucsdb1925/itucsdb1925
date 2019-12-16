@@ -169,7 +169,7 @@ def home_page():
       balance_dst=database.get_balance(transfer_name_cash)
       database.transfer_between_users_cash(balance_src,balance_dst,transfer_amount_cash)
       database.create_cash_transactions()
-      cash_transaction = Cash_Transactions(balance_src.user_name,balance_dst.user_name,transfer_amount_cash)
+      cash_transaction = Cash_Transactions(0,balance_src.user_name,balance_dst.user_name,transfer_amount_cash)
       database.add_cash_transaction(cash_transaction)
 
   if(transfer_name_mobyCoin):
@@ -179,7 +179,7 @@ def home_page():
       balance_dst=database.get_balance(transfer_name_mobyCoin)
       database.transfer_between_users_mobycoin(balance_src,balance_dst,transfer_amount_mobyCoin)
       database.create_mobyCoin_transactions()
-      mobyCoin_transaction = MobyCoin_Transactions(balance_src.user_name,balance_dst.user_name,transfer_amount_mobyCoin)
+      mobyCoin_transaction = MobyCoin_Transactions(0,balance_src.user_name,balance_dst.user_name,transfer_amount_mobyCoin)
       database.add_mobyCoin_transaction(mobyCoin_transaction)
 
   if(delete_id):

@@ -5,7 +5,7 @@ from flask_login import UserMixin
 from balance import Balance
 from employees import Employees
 from transaction import Cash_Transactions,MobyCoin_Transactions
-
+from request import Cash_Requests,MobyCoin_Requests
 class Database:
   def __init__(self, connection_string):
     self.connection_string = connection_string
@@ -107,14 +107,14 @@ class Database:
   def create_cash_transactions(self):
     with dbapi2.connect(self.connection_string) as connection:
       cursor = connection.cursor()
-      sql_command="CREATE TABLE IF NOT EXISTS CASH_TRANSACTION_DATA (SENDER_NAME VARCHAR(100), RECEIVER_NAME VARCHAR(100),CASH FLOAT,FOREIGN KEY (SENDER_NAME) REFERENCES USERS(USER_NAME),FOREIGN KEY (RECEIVER_NAME) REFERENCES USERS(USER_NAME),CONSTRAINT CON PRIMARY KEY (SENDER_NAME,RECEIVER_NAME))"
+      sql_command="CREATE TABLE IF NOT EXISTS CASH_TRANSACTION (ID SERIAL PRIMARY KEY,SENDER_NAME VARCHAR(100), RECEIVER_NAME VARCHAR(100),CASH FLOAT,FOREIGN KEY (SENDER_NAME) REFERENCES USERS(USER_NAME),FOREIGN KEY (RECEIVER_NAME) REFERENCES USERS(USER_NAME))"
       cursor.execute(sql_command)
       connection.commit()
       cursor.close()
   def add_cash_transaction(self,cash_transaction):
     with dbapi2.connect(self.connection_string) as connection:
       cursor = connection.cursor()
-      sql_command="INSERT INTO CASH_TRANSACTION_DATA (SENDER_NAME,RECEIVER_NAME,CASH) VALUES ( %(sender_name)s, %(receiver_name)s, %(cash)s)"
+      sql_command="INSERT INTO CASH_TRANSACTION (SENDER_NAME,RECEIVER_NAME,CASH) VALUES ( %(sender_name)s, %(receiver_name)s, %(cash)s)"
       cursor.execute(sql_command,{'sender_name':cash_transaction.sender_name,'receiver_name':cash_transaction.receiver_name,'cash':cash_transaction.cash})
       connection.commit()
       cursor.close()
@@ -123,21 +123,20 @@ class Database:
     transactions = []
     with dbapi2.connect(self.connection_string) as connection:
       cursor = connection.cursor()
-      sql_command="SELECT * FROM CASH_TRANSACTION_DATA WHERE(SENDER_NAME = %(user_name)s OR RECEIVER_NAME = %(user_name)s)"
+      sql_command="SELECT * FROM CASH_TRANSACTION WHERE(SENDER_NAME = %(user_name)s OR RECEIVER_NAME = %(user_name)s)"
       cursor.execute(sql_command,{'user_name':user_name})
       balance_data = cursor.fetchall()
       connection.commit()
       cursor.close()
     for i in transaction_data:
-      transactions.append(Cash_Transactions(i[0],i[1],i[2]))
+      transactions.append(Cash_Transactions(i[0],i[1],i[2],i[3]))
     return transactions
   def create_mobyCoin_transactions(self):
     with dbapi2.connect(self.connection_string) as connection:
       cursor = connection.cursor()
       sql_command="""CREATE TABLE IF NOT EXISTS MOBYCOIN_TRANSACTION 
-      (SENDER_NAME VARCHAR(100), RECEIVER_NAME VARCHAR(100),MOBYCOIN FLOAT,
-      FOREIGN KEY (SENDER_NAME) REFERENCES USERS(USER_NAME) ON DELETE CASCADE,FOREIGN KEY (RECEIVER_NAME) REFERENCES USERS(USER_NAME) ON DELETE CASCADE,
-      CONSTRAINT MOBY_CON PRIMARY KEY (SENDER_NAME,RECEIVER_NAME))"""
+      (ID SERIAL PRIMARY KEY,SENDER_NAME VARCHAR(100), RECEIVER_NAME VARCHAR(100),MOBYCOIN FLOAT,
+      FOREIGN KEY (SENDER_NAME) REFERENCES USERS(USER_NAME) ON DELETE CASCADE,FOREIGN KEY (RECEIVER_NAME) REFERENCES USERS(USER_NAME) ON DELETE CASCADE)"""
       cursor.execute(sql_command)
       connection.commit()
       cursor.close()
@@ -148,7 +147,7 @@ class Database:
       cursor.execute(sql_command,{'sender_name':mobycoin_transaction.sender_name,'receiver_name':mobycoin_transaction.receiver_name,'mobycoin':mobycoin_transaction.mobyCoin})
       connection.commit()
       cursor.close()
-  def get_mobyCoin_transaction(self,user_name):
+  def get_mobyCoin_transactions(self,user_name):
     transaction_data = []
     transactions = []
     with dbapi2.connect(self.connection_string) as connection:
@@ -159,7 +158,70 @@ class Database:
       connection.commit()
       cursor.close()
     for i in transaction_data:
-      transactions.append(MobyCoin_Transactions(i[0],i[1],i[2]))
+      transactions.append(MobyCoin_Transactions(i[0],i[1],i[2],i[3]))
+    return transactions
+  def create_cash_requests(self):
+    with dbapi2.connect(self.connection_string) as connection:
+      cursor = connection.cursor()
+      sql_command="CREATE TABLE IF NOT EXISTS CASH_REQUESTS (ID SERIAL PRIMARY KEY,SENDER_NAME VARCHAR(100), RECEIVER_NAME VARCHAR(100),CASH FLOAT,DESCRIPTION VARCHAR(100),FOREIGN KEY (SENDER_NAME) REFERENCES USERS(USER_NAME),FOREIGN KEY (RECEIVER_NAME) REFERENCES USERS(USER_NAME))"
+      cursor.execute(sql_command)
+      connection.commit()
+      cursor.close()
+  def add_cash_request(self,cash_request):
+    with dbapi2.connect(self.connection_string) as connection:
+      cursor = connection.cursor()
+      sql_command="INSERT INTO CASH_REQUESTS (SENDER_NAME,RECEIVER_NAME,CASH,DESCRIPTION) VALUES ( %(sender_name)s, %(receiver_name)s, %(cash)s,%(description)s)"
+      cursor.execute(sql_command,{'sender_name':cash_request.sender_name,'receiver_name':cash_request.receiver_name,'cash':cash_request.cash,'description':cash_request.description})
+      connection.commit()
+      cursor.close()
+  def delete_cash_request(self,cash_request_id):
+    with dbapi2.connect(self.connection_string) as connection:
+      cursor = connection.cursor()
+      sql_command="DELETE FROM CASH_REQUESTS WHERE (ID = %(id)s)"
+      cursor.execute(sql_command,{'id':cash_request_id})
+      connection.commit()
+      cursor.close()
+  def get_cash_requests(self,user_name):
+    transaction_data = []
+    transactions = []
+    with dbapi2.connect(self.connection_string) as connection:
+      cursor = connection.cursor()
+      sql_command="SELECT * FROM CASH_REQUESTS WHERE(SENDER_NAME = %(user_name)s OR RECEIVER_NAME = %(user_name)s)"
+      cursor.execute(sql_command,{'user_name':user_name})
+      balance_data = cursor.fetchall()
+      connection.commit()
+      cursor.close()
+    for i in transaction_data:
+      transactions.append(Cash_Requests(i[0],i[1],i[2],i[3],i[4]))
+    return transactions
+  def create_mobyCoin_requests(self):
+    with dbapi2.connect(self.connection_string) as connection:
+      cursor = connection.cursor()
+      sql_command="""CREATE TABLE IF NOT EXISTS MOBYCOIN_REQUESTS 
+      (ID SERIAL PRIMARY KEY,SENDER_NAME VARCHAR(100), RECEIVER_NAME VARCHAR(100),MOBYCOIN FLOAT,DESCRIPTION VARCHAR(100),
+      FOREIGN KEY (SENDER_NAME) REFERENCES USERS(USER_NAME) ON DELETE CASCADE,FOREIGN KEY (RECEIVER_NAME) REFERENCES USERS(USER_NAME) ON DELETE CASCADE)"""
+      cursor.execute(sql_command)
+      connection.commit()
+      cursor.close()
+  def add_mobyCoin_request(self,mobycoin_request):
+    with dbapi2.connect(self.connection_string) as connection:
+      cursor = connection.cursor()
+      sql_command="INSERT INTO MOBYCOIN_REQUESTS (SENDER_NAME,RECEIVER_NAME,MOBYCOIN,DESCRIPTION) VALUES ( %(sender_name)s, %(receiver_name)s, %(mobycoin)s,%(description)s)"
+      cursor.execute(sql_command,{'sender_name':mobycoin_request.sender_name,'receiver_name':mobycoin_request.receiver_name,'mobycoin':mobycoin_request.mobyCoin,'description':mobycoin_request.description})
+      connection.commit()
+      cursor.close()
+  def get_mobyCoin_requests(self,user_name):
+    transaction_data = []
+    transactions = []
+    with dbapi2.connect(self.connection_string) as connection:
+      cursor = connection.cursor()
+      sql_command="SELECT * FROM MOBYCOIN_REQUESTS WHERE(SENDER_NAME = %(user_name)s OR RECEIVER_NAME = %(user_name)s)"
+      cursor.execute(sql_command,{'user_name':user_name})
+      balance_data = cursor.fetchall()
+      connection.commit()
+      cursor.close()
+    for i in transaction_data:
+      transactions.append(MobyCoin_Requests(i[0],i[1],i[2],i[3],i[4]))
     return transactions
   def salary_payment_cash(self,balance_src,balance_dst,cash):
     balance_src.cash -= cash
