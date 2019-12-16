@@ -76,6 +76,8 @@ def update():
 def transaction_page():
   user_id = current_user.get_id()
   database=Database(dsn)
+  database.create_cash_transactions()
+  database.create_mobyCoin_transactions()
   cash_transactions = database.get_cash_transactions(user_id)
   mobyCoin_transactions = database.get_mobyCoin_transactions(user_id)
   print(cash_transactions)
