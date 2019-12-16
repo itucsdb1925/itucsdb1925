@@ -107,14 +107,14 @@ class Database:
   def create_cash_transactions(self):
     with dbapi2.connect(self.connection_string) as connection:
       cursor = connection.cursor()
-      sql_command="CREATE TABLE IF NOT EXISTS CASH_TRANSACTIONS (SENDER_NAME VARCHAR(100) REFERENCES USERS(USER_NAME), RECEIVER_NAME VARCHAR(100) REFERENCES USERS(USER_NAME),CASH FLOAT,CONSTRAINT CASH_TRANSACTIONS PRIMARY KEY (SENDER_NAME,RECEIVER_NAME))"
+      sql_command="CREATE TABLE IF NOT EXISTS CASH_TRANSACTION_DATA (SENDER_NAME VARCHAR(100), RECEIVER_NAME VARCHAR(100),CASH FLOAT,FOREIGN KEY (SENDER_NAME) REFERENCES USERS(USER_NAME),FOREIGN KEY (RECEIVER_NAME) REFERENCES USERS(USER_NAME),CONSTRAINT CON PRIMARY KEY (SENDER_NAME,RECEIVER_NAME))"
       cursor.execute(sql_command)
       connection.commit()
       cursor.close()
   def add_cash_transaction(self,cash_transaction):
     with dbapi2.connect(self.connection_string) as connection:
       cursor = connection.cursor()
-      sql_command="INSERT INTO CASH_TRANSACTIONS (SENDER_NAME,RECEIVER_NAME,CASH) VALUES ( %(sender_name)s, %(receiver_name)s, %(cash)s)"
+      sql_command="INSERT INTO CASH_TRANSACTION_DATA (SENDER_NAME,RECEIVER_NAME,CASH) VALUES ( %(sender_name)s, %(receiver_name)s, %(cash)s)"
       cursor.execute(sql_command,{'sender_name':cash_transaction.sender_name,'receiver_name':cash_transaction.receiver_name,'cash':cash_transaction.cash})
       connection.commit()
       cursor.close()
@@ -123,7 +123,7 @@ class Database:
     transactions = []
     with dbapi2.connect(self.connection_string) as connection:
       cursor = connection.cursor()
-      sql_command="SELECT * FROM CASH_TRANSACTIONS WHERE(SENDER_NAME = %(user_name)s OR RECEIVER_NAME = %(user_name)s)"
+      sql_command="SELECT * FROM CASH_TRANSACTION_DATA WHERE(SENDER_NAME = %(user_name)s OR RECEIVER_NAME = %(user_name)s)"
       cursor.execute(sql_command,{'user_name':user_name})
       balance_data = cursor.fetchall()
       connection.commit()
@@ -134,14 +134,17 @@ class Database:
   def create_mobyCoin_transactions(self):
     with dbapi2.connect(self.connection_string) as connection:
       cursor = connection.cursor()
-      sql_command="CREATE TABLE IF NOT EXISTS MOBYCOIN_TRANSACTIONS (SENDER_NAME VARCHAR(100) REFERENCES USERS(USER_NAME), RECEIVER_NAME VARCHAR(100) REFERENCES USERS(USER_NAME),MOBYCOIN FLOAT,CONSTRAINT MOBYCOIN_TRANSACTIONS PRIMARY KEY (SENDER_NAME,RECEIVER_NAME))"
+      sql_command="""CREATE TABLE IF NOT EXISTS MOBYCOIN_TRANSACTION 
+      (SENDER_NAME VARCHAR(100), RECEIVER_NAME VARCHAR(100),MOBYCOIN FLOAT,
+      FOREIGN KEY (SENDER_NAME) REFERENCES USERS(USER_NAME) ON DELETE CASCADE,FOREIGN KEY (RECEIVER_NAME) REFERENCES USERS(USER_NAME) ON DELETE CASCADE,
+      CONSTRAINT MOBY_CON PRIMARY KEY (SENDER_NAME,RECEIVER_NAME))"""
       cursor.execute(sql_command)
       connection.commit()
       cursor.close()
   def add_mobyCoin_transaction(self,mobycoin_transaction):
     with dbapi2.connect(self.connection_string) as connection:
       cursor = connection.cursor()
-      sql_command="INSERT INTO MOBYCOIN_TRANSACTIONS (SENDER_NAME,RECEIVER_NAME,MOBYCOIN) VALUES ( %(sender_name)s, %(receiver_name)s, %(mobycoin)s)"
+      sql_command="INSERT INTO MOBYCOIN_TRANSACTION (SENDER_NAME,RECEIVER_NAME,MOBYCOIN) VALUES ( %(sender_name)s, %(receiver_name)s, %(mobycoin)s)"
       cursor.execute(sql_command,{'sender_name':mobycoin_transaction.sender_name,'receiver_name':mobycoin_transaction.receiver_name,'mobycoin':mobycoin_transaction.mobyCoin})
       connection.commit()
       cursor.close()
@@ -150,7 +153,7 @@ class Database:
     transactions = []
     with dbapi2.connect(self.connection_string) as connection:
       cursor = connection.cursor()
-      sql_command="SELECT * FROM MOBYCOIN_TRANSACTIONS WHERE(SENDER_NAME = %(user_name)s OR RECEIVER_NAME = %(user_name)s)"
+      sql_command="SELECT * FROM MOBYCOIN_TRANSACTION WHERE(SENDER_NAME = %(user_name)s OR RECEIVER_NAME = %(user_name)s)"
       cursor.execute(sql_command,{'user_name':user_name})
       balance_data = cursor.fetchall()
       connection.commit()
@@ -174,6 +177,9 @@ class Database:
     added_coin = cash / 10
     balance.mobyCoin += added_coin
     balance.cash -= cash
+    self.update_balance(balance)
+  def buy_cash(self,balance,cash_amount):
+    balance.cash += cash_amount
     self.update_balance(balance)
   def sell_mobycoin(self,balance,mobycoin):
     if(mobycoin>balance.mobyCoin):

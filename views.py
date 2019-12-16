@@ -138,12 +138,19 @@ def home_page():
   transfer_name_mobyCoin = request.form.get("TransferNameMobyCoin")
   transfer_amount_mobyCoin = request.form.get("TransferAmountMobyCoin")
 
+  add_cash = request.form.get("BuyCash")
+
   #given_name = request.form.get("Name")
   delete_id = request.form.get("id_to_delete")
   update_id = request.form.get("id_to_update")
   database=Database(dsn)
   database.create_balance()
   
+  if(add_cash):
+    add_cash = float(add_cash)
+    if(user):
+      balance=database.get_balance(user_id)
+      database.buy_cash(balance,add_cash)
   if(cash_to_mobyCoin):
     cash_to_mobyCoin=float(cash_to_mobyCoin)
     if(user):
