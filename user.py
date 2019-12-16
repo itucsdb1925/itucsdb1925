@@ -5,8 +5,8 @@ from flask_login import UserMixin
 from database import Database
 
 import os
-f = open("database_string.txt","r")
-dsn = f.read()
+
+dsn =  os.getenv("DATABASE_URL")
 class User(UserMixin):
   def __init__(self, User_name, Password,Balance_id=0):
     self.user_name = User_name
