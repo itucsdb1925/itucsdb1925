@@ -17,6 +17,7 @@ def create_app():
   app.add_url_rule("/update", view_func=views.update,methods=['GET','POST'])
   app.add_url_rule("/signedin", view_func=views.home_page,methods=['GET','POST'])
   app.add_url_rule("/signout", view_func=views.sign_out, methods=['GET','POST'])
+  app.add_url_rule("/employees",view_func=views.employees_page, methods=['GET','POST'])
   lm.init_app(app)
   lm.login_view = "sign_in"            
   return app

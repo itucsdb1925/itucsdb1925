@@ -3,6 +3,7 @@ import psycopg2 as dbapi2
 from balance import Balance
 from user import User,get_user
 from database import Database
+from employees import Employees
 from forms import SigninForm
 from flask_login import LoginManager,login_user,logout_user,login_required,current_user
 
@@ -18,6 +19,7 @@ def sign_in():
     database=Database(dsn)
     database.create_balance()
     database.create_user()
+    database.create_employees()
     print(user.user_name,user.password)
     if(username and password):
       if(user.password):
@@ -41,6 +43,7 @@ def sign_up():
   database=Database(dsn)
   database.create_user()
   database.create_balance()
+  database.create_employees()
   if(username and password):
     user=User(username,password)
     database.add_user(user)
@@ -68,33 +71,85 @@ def update():
     return redirect("/signedin")
   return render_template("update.html",update_id=update_id)
 
+@login_required
+def employees_page():
+  user_id = current_user.get_id()
+  user = get_user(user_id)
+
+  employer_name = user_id
+  employee_name_to_add = request.form.get("EmployeeName")
+
+
+  pay_salary_cash = request.form.get("PaySalaryCash")
+  pay_salary_mobyCoin = request.form.get("PaySalaryMobyCoin")
+
+  database=Database(dsn)
+
+  all_employees = database.get_employee(employer_name)
+
+
+  if(pay_salary_cash):
+    balance_employer = database.get_balance(employer_name)
+    if(balance_employer.cash >= (float(pay_salary_cash)*len(all_employees))):
+      for i in range(len(all_employees)):
+        balance_employee=database.get_balance(all_employees[i])
+        database.salary_payment_cash(balance_employer,balance_employee,float(pay_salary_cash))
+  if(pay_salary_mobyCoin):
+    balance_employer = database.get_balance(employer_name)
+    if(balance_employer.mobyCoin >= (float(pay_salary_mobyCoin)*len(all_employees))):
+      for i in range(len(all_employees)):
+        balance_employee=database.get_balance(all_employees[i])
+        database.salary_payment_mobyCoin(balance_employer,balance_employee,float(pay_salary_mobyCoin))
+  if(employer_name and employee_name_to_add):
+    employees=Employees(0,employer_name,employee_name_to_add)
+    database.add_employee(employees)
+
+  delete_employee_id = request.form.get("delete_employee_id")
+
+  if(delete_employee_id):
+    database.delete_employee(delete_employee_id)
+
+
+  connection = dbapi2.connect(dsn)
+  cursor = connection.cursor()
+  sql_command="SELECT * FROM EMPLOYEES WHERE (EMPLOYER_NAME = %(employer_name)s)"
+  cursor.execute(sql_command,{'employer_name':employer_name})
+  fetched = cursor.fetchall()
+  employees_list = []
+  for i in fetched:
+    employees_list.append(Employees(i[0],i[1],i[2]))
+
+
+  #statement = """INSERT INTO PERSON (
+  #NAME) VALUES (%(name_person)s)"""
+  #cursor.execute(statement,{'name_person':names.get_full_name()})
+  connection.commit()
+  cursor.close()
+  connection.close()
+
+  return render_template("employees.html",employees_list=employees_list)
+
 #@app.route("/signedin", methods=["POST","GET"])
 @login_required
 def home_page():
   user_id = current_user.get_id()
   user = get_user(user_id)
+
   cash_to_mobyCoin = request.form.get("CashtoMobyCoin")
   mobyCoin_to_cash = request.form.get("MobyCointoCash")
-
 
   transfer_name_cash = request.form.get("TransferNameCash")
   transfer_amount_cash = request.form.get("TransferAmountCash")
 
-
-
-
-
-
   transfer_name_mobyCoin = request.form.get("TransferNameMobyCoin")
   transfer_amount_mobyCoin = request.form.get("TransferAmountMobyCoin")
-
-
 
   #given_name = request.form.get("Name")
   delete_id = request.form.get("id_to_delete")
   update_id = request.form.get("id_to_update")
   database=Database(dsn)
   database.create_balance()
+  
   if(cash_to_mobyCoin):
     cash_to_mobyCoin=float(cash_to_mobyCoin)
     if(user):
