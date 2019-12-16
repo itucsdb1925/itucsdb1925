@@ -5,8 +5,7 @@ from passlib.hash import pbkdf2_sha256 as hasher
 from flask_login import UserMixin
 from database import Database
 
-f = open("database_string.txt","r")
-dsn = f.read()
+dsn = os.getenv("DATABASE_URL")
 
 class User(UserMixin):
   def __init__(self, User_name, Password,Balance_id=0):

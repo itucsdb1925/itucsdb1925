@@ -9,8 +9,10 @@ from request import MobyCoin_Requests,Cash_Requests
 from forms import SigninForm
 from flask_login import LoginManager,login_user,logout_user,login_required,current_user
 
-f = open("database_string.txt","r")
-dsn = f.read()
+"""f = open("database_string.txt","r")
+dsn = f.read()"""
+
+dsn = os.getenv("DATABASE_URL")
 #@app.route("/signin",methods=["POST","GET"])
 def sign_in():
   form = SigninForm()
