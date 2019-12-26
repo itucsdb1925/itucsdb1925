@@ -71,10 +71,6 @@ Added buying cash
 
 Users can exchange between currencies
 
-Request system
-""""""""""""""""""
-
-Added request system
 
 Added Salary Payment
 """"""""""""""""""""

@@ -1,20 +1,20 @@
 Parts Implemented by İbrahim Ethem TÜRKERİ
 ==========================================
 
-Employee/Employees
-""""""""""""""""""
+Employee/Employees salary payment
+"""""""""""""""""""""""""""""""""
 
-Employees can have employees and pay their salaries
+Employees pay their salaries
 
    .. image:: employ.png
       :scale: 40 %
       :alt: home page
 
-Request System
-""""""""""""""
+Past Transactions
+""""""""""""""""""""""""
 
-Request system, users can request currency, if it accepted that amount is transfered.
-
-   .. image:: request.png
+   .. image:: past.png
       :scale: 40 %
       :alt: home page
+
+Users can see their past transactions

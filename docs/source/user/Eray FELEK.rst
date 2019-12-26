@@ -17,4 +17,12 @@ Users can exchange cash and coin
       :scale: 40 %
       :alt: home page
 
+Employers can have employees
+"""""""""""""""""""""""""""""""""
+
+Having employees
+
+   .. image:: employ.png
+      :scale: 40 %
+      :alt: home page
 
