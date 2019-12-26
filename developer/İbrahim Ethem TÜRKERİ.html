@@ -1,0 +1,318 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Parts Implemented by İbrahim Ethem TÜRKERİ &mdash; ITUCSDB1925  documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Parts Implemented by Ömer GÜLER" href="Ömer GÜLER.html" />
+    <link rel="prev" title="Parts Implemented by Eray FELEK" href="Eray FELEK.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> ITUCSDB1925
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../user/index.html">User Guide</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Developer Guide</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="index.html#database-design">Database Design</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="Eray FELEK.html">Parts Implemented by Eray FELEK</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Parts Implemented by İbrahim Ethem TÜRKERİ</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#moby-coin-transaction">Moby Coin Transaction</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#added-buying-cash">Added buying cash</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#added-salary-payment">Added Salary Payment</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="Ömer GÜLER.html">Parts Implemented by Ömer GÜLER</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">ITUCSDB1925</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="index.html">Developer Guide</a> &raquo;</li>
+        
+      <li>Parts Implemented by İbrahim Ethem TÜRKERİ</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/developer/İbrahim Ethem TÜRKERİ.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="parts-implemented-by-ibrahim-ethem-turkeri">
+<h1>Parts Implemented by İbrahim Ethem TÜRKERİ<a class="headerlink" href="#parts-implemented-by-ibrahim-ethem-turkeri" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="moby-coin-transaction">
+<h2>Moby Coin Transaction<a class="headerlink" href="#moby-coin-transaction" title="Permalink to this headline">¶</a></h2>
+<p>Created tables to see latest transactions</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">create_cash_transactions</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">with</span> <span class="n">dbapi2</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">connection_string</span><span class="p">)</span> <span class="k">as</span> <span class="n">connection</span><span class="p">:</span>
+      <span class="n">cursor</span> <span class="o">=</span> <span class="n">connection</span><span class="o">.</span><span class="n">cursor</span><span class="p">()</span>
+      <span class="n">sql_command</span><span class="o">=</span><span class="s2">&quot;CREATE TABLE IF NOT EXISTS CASH_TRANSACTION (ID SERIAL PRIMARY KEY,SENDER_NAME VARCHAR(100), RECEIVER_NAME VARCHAR(100),CASH FLOAT,FOREIGN KEY (SENDER_NAME) REFERENCES USERS(USER_NAME),FOREIGN KEY (RECEIVER_NAME) REFERENCES USERS(USER_NAME))&quot;</span>
+      <span class="n">cursor</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">sql_command</span><span class="p">)</span>
+      <span class="n">connection</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>
+      <span class="n">cursor</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+  <span class="k">def</span> <span class="nf">add_cash_transaction</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">cash_transaction</span><span class="p">):</span>
+    <span class="k">with</span> <span class="n">dbapi2</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">connection_string</span><span class="p">)</span> <span class="k">as</span> <span class="n">connection</span><span class="p">:</span>
+      <span class="n">cursor</span> <span class="o">=</span> <span class="n">connection</span><span class="o">.</span><span class="n">cursor</span><span class="p">()</span>
+      <span class="n">sql_command</span><span class="o">=</span><span class="s2">&quot;INSERT INTO CASH_TRANSACTION (SENDER_NAME,RECEIVER_NAME,CASH) VALUES ( </span><span class="si">%(sender_name)s</span><span class="s2">, </span><span class="si">%(receiver_name)s</span><span class="s2">, </span><span class="si">%(cash)s</span><span class="s2">)&quot;</span>
+      <span class="n">cursor</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">sql_command</span><span class="p">,{</span><span class="s1">&#39;sender_name&#39;</span><span class="p">:</span><span class="n">cash_transaction</span><span class="o">.</span><span class="n">sender_name</span><span class="p">,</span><span class="s1">&#39;receiver_name&#39;</span><span class="p">:</span><span class="n">cash_transaction</span><span class="o">.</span><span class="n">receiver_name</span><span class="p">,</span><span class="s1">&#39;cash&#39;</span><span class="p">:</span><span class="n">cash_transaction</span><span class="o">.</span><span class="n">cash</span><span class="p">})</span>
+      <span class="n">connection</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>
+      <span class="n">cursor</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+  <span class="k">def</span> <span class="nf">get_cash_transactions</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">user_name</span><span class="p">):</span>
+    <span class="n">transaction_data</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">transactions</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">with</span> <span class="n">dbapi2</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">connection_string</span><span class="p">)</span> <span class="k">as</span> <span class="n">connection</span><span class="p">:</span>
+      <span class="n">cursor</span> <span class="o">=</span> <span class="n">connection</span><span class="o">.</span><span class="n">cursor</span><span class="p">()</span>
+      <span class="n">sql_command</span><span class="o">=</span><span class="s2">&quot;SELECT * FROM CASH_TRANSACTION WHERE(SENDER_NAME = </span><span class="si">%(user_name)s</span><span class="s2"> OR RECEIVER_NAME = </span><span class="si">%(user_name)s</span><span class="s2">)&quot;</span>
+      <span class="n">cursor</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">sql_command</span><span class="p">,{</span><span class="s1">&#39;user_name&#39;</span><span class="p">:</span><span class="n">user_name</span><span class="p">})</span>
+      <span class="n">transaction_data</span> <span class="o">=</span> <span class="n">cursor</span><span class="o">.</span><span class="n">fetchall</span><span class="p">()</span>
+      <span class="n">connection</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>
+      <span class="n">cursor</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">transaction_data</span><span class="p">:</span>
+      <span class="n">transactions</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Cash_Transactions</span><span class="p">(</span><span class="n">i</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">i</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="n">i</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span><span class="n">i</span><span class="p">[</span><span class="mi">3</span><span class="p">]))</span>
+    <span class="k">return</span> <span class="n">transactions</span>
+  <span class="k">def</span> <span class="nf">create_mobyCoin_transactions</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">with</span> <span class="n">dbapi2</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">connection_string</span><span class="p">)</span> <span class="k">as</span> <span class="n">connection</span><span class="p">:</span>
+      <span class="n">cursor</span> <span class="o">=</span> <span class="n">connection</span><span class="o">.</span><span class="n">cursor</span><span class="p">()</span>
+      <span class="n">sql_command</span><span class="o">=</span><span class="s2">&quot;&quot;&quot;CREATE TABLE IF NOT EXISTS MOBYCOIN_TRANSACTION</span>
+<span class="s2">      (ID SERIAL PRIMARY KEY,SENDER_NAME VARCHAR(100), RECEIVER_NAME VARCHAR(100),MOBYCOIN FLOAT,</span>
+<span class="s2">      FOREIGN KEY (SENDER_NAME) REFERENCES USERS(USER_NAME) ON DELETE CASCADE,FOREIGN KEY (RECEIVER_NAME) REFERENCES USERS(USER_NAME) ON DELETE CASCADE)&quot;&quot;&quot;</span>
+      <span class="n">cursor</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">sql_command</span><span class="p">)</span>
+      <span class="n">connection</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>
+      <span class="n">cursor</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+  <span class="k">def</span> <span class="nf">add_mobyCoin_transaction</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">mobycoin_transaction</span><span class="p">):</span>
+    <span class="k">with</span> <span class="n">dbapi2</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">connection_string</span><span class="p">)</span> <span class="k">as</span> <span class="n">connection</span><span class="p">:</span>
+      <span class="n">cursor</span> <span class="o">=</span> <span class="n">connection</span><span class="o">.</span><span class="n">cursor</span><span class="p">()</span>
+      <span class="n">sql_command</span><span class="o">=</span><span class="s2">&quot;INSERT INTO MOBYCOIN_TRANSACTION (SENDER_NAME,RECEIVER_NAME,MOBYCOIN) VALUES ( </span><span class="si">%(sender_name)s</span><span class="s2">, </span><span class="si">%(receiver_name)s</span><span class="s2">, </span><span class="si">%(mobycoin)s</span><span class="s2">)&quot;</span>
+      <span class="n">cursor</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">sql_command</span><span class="p">,{</span><span class="s1">&#39;sender_name&#39;</span><span class="p">:</span><span class="n">mobycoin_transaction</span><span class="o">.</span><span class="n">sender_name</span><span class="p">,</span><span class="s1">&#39;receiver_name&#39;</span><span class="p">:</span><span class="n">mobycoin_transaction</span><span class="o">.</span><span class="n">receiver_name</span><span class="p">,</span><span class="s1">&#39;mobycoin&#39;</span><span class="p">:</span><span class="n">mobycoin_transaction</span><span class="o">.</span><span class="n">mobyCoin</span><span class="p">})</span>
+      <span class="n">connection</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>
+      <span class="n">cursor</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+  <span class="k">def</span> <span class="nf">get_mobyCoin_transactions</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">user_name</span><span class="p">):</span>
+    <span class="n">transaction_data</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">transactions</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">with</span> <span class="n">dbapi2</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">connection_string</span><span class="p">)</span> <span class="k">as</span> <span class="n">connection</span><span class="p">:</span>
+      <span class="n">cursor</span> <span class="o">=</span> <span class="n">connection</span><span class="o">.</span><span class="n">cursor</span><span class="p">()</span>
+      <span class="n">sql_command</span><span class="o">=</span><span class="s2">&quot;SELECT * FROM MOBYCOIN_TRANSACTION WHERE(SENDER_NAME = </span><span class="si">%(user_name)s</span><span class="s2"> OR RECEIVER_NAME = </span><span class="si">%(user_name)s</span><span class="s2">)&quot;</span>
+      <span class="n">cursor</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">sql_command</span><span class="p">,{</span><span class="s1">&#39;user_name&#39;</span><span class="p">:</span><span class="n">user_name</span><span class="p">})</span>
+      <span class="n">transaction_data</span> <span class="o">=</span> <span class="n">cursor</span><span class="o">.</span><span class="n">fetchall</span><span class="p">()</span>
+      <span class="n">connection</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>
+      <span class="n">cursor</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">transaction_data</span><span class="p">:</span>
+      <span class="n">transactions</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">MobyCoin_Transactions</span><span class="p">(</span><span class="n">i</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">i</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="n">i</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span><span class="n">i</span><span class="p">[</span><span class="mi">3</span><span class="p">]))</span>
+    <span class="k">return</span> <span class="n">transactionsd</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="added-buying-cash">
+<h2>Added buying cash<a class="headerlink" href="#added-buying-cash" title="Permalink to this headline">¶</a></h2>
+<p>Users can exchange between currencies</p>
+</div>
+<div class="section" id="added-salary-payment">
+<h2>Added Salary Payment<a class="headerlink" href="#added-salary-payment" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">salary_payment_cash</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">balance_src</span><span class="p">,</span><span class="n">balance_dst</span><span class="p">,</span><span class="n">cash</span><span class="p">):</span>
+    <span class="n">balance_src</span><span class="o">.</span><span class="n">cash</span> <span class="o">-=</span> <span class="n">cash</span>
+    <span class="n">balance_dst</span><span class="o">.</span><span class="n">cash</span> <span class="o">+=</span> <span class="n">cash</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">update_balance</span><span class="p">(</span><span class="n">balance_src</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">update_balance</span><span class="p">(</span><span class="n">balance_dst</span><span class="p">)</span>
+  <span class="k">def</span> <span class="nf">salary_payment_mobyCoin</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">balance_src</span><span class="p">,</span><span class="n">balance_dst</span><span class="p">,</span><span class="n">mobyCoin</span><span class="p">):</span>
+    <span class="n">balance_src</span><span class="o">.</span><span class="n">mobyCoin</span> <span class="o">-=</span> <span class="n">mobyCoin</span>
+    <span class="n">balance_dst</span><span class="o">.</span><span class="n">mobyCoin</span> <span class="o">+=</span> <span class="n">mobyCoin</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">update_balance</span><span class="p">(</span><span class="n">balance_src</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">update_balance</span><span class="p">(</span><span class="n">balance_dst</span><span class="p">)</span>
+  <span class="k">def</span> <span class="nf">buy_mobycoin</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">balance</span><span class="p">,</span><span class="n">cash</span><span class="p">):</span>
+    <span class="k">if</span><span class="p">(</span><span class="n">cash</span><span class="o">&gt;</span><span class="n">balance</span><span class="o">.</span><span class="n">cash</span><span class="p">):</span>
+      <span class="k">return</span> <span class="kc">False</span>
+    <span class="n">added_coin</span> <span class="o">=</span> <span class="n">cash</span> <span class="o">/</span> <span class="mi">10</span>
+    <span class="n">balance</span><span class="o">.</span><span class="n">mobyCoin</span> <span class="o">+=</span> <span class="n">added_coin</span>
+    <span class="n">balance</span><span class="o">.</span><span class="n">cash</span> <span class="o">-=</span> <span class="n">cash</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">update_balance</span><span class="p">(</span><span class="n">balance</span><span class="p">)</span>
+    <span class="k">return</span> <span class="kc">True</span>
+  <span class="k">def</span> <span class="nf">buy_cash</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">balance</span><span class="p">,</span><span class="n">cash_amount</span><span class="p">):</span>
+    <span class="n">balance</span><span class="o">.</span><span class="n">cash</span> <span class="o">+=</span> <span class="n">cash_amount</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">update_balance</span><span class="p">(</span><span class="n">balance</span><span class="p">)</span>
+  <span class="k">def</span> <span class="nf">sell_mobycoin</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">balance</span><span class="p">,</span><span class="n">mobycoin</span><span class="p">):</span>
+    <span class="k">if</span><span class="p">(</span><span class="n">mobycoin</span><span class="o">&gt;</span><span class="n">balance</span><span class="o">.</span><span class="n">mobyCoin</span><span class="p">):</span>
+      <span class="k">return</span> <span class="kc">False</span>
+    <span class="n">added_cash</span> <span class="o">=</span> <span class="n">mobycoin</span><span class="o">*</span><span class="mi">10</span>
+    <span class="n">balance</span><span class="o">.</span><span class="n">mobyCoin</span> <span class="o">-=</span> <span class="n">mobycoin</span>
+    <span class="n">balance</span><span class="o">.</span><span class="n">cash</span> <span class="o">+=</span> <span class="n">added_cash</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">update_balance</span><span class="p">(</span><span class="n">balance</span><span class="p">)</span>
+    <span class="k">return</span> <span class="kc">True</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="Ömer GÜLER.html" class="btn btn-neutral float-right" title="Parts Implemented by Ömer GÜLER" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="Eray FELEK.html" class="btn btn-neutral float-left" title="Parts Implemented by Eray FELEK" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, ITUCSDB1925
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
