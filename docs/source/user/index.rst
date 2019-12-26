@@ -1,22 +1,17 @@
 User Guide
 ==========
 
-**explain how your application works from the user perspective, use
-screenshots whereever appropriate**
+You can find the main page here. Other pars that are implemented by our developers displayed under their name.
+MobyCoin is a platform where you can have account which have balances. You can exchange coin as well as cash or buy coin with cash.
+Users can request money from other users and have employees which eases their salary payment.
 
-**to add a picture, use the following example**::
-
-   .. figure:: picture.png
-      :scale: 50 %
-      :alt: map to buried treasure
-
-      This is the caption of the figure (a simple paragraph).
+   .. image:: home.png
+      :scale: 40 %
+      :alt: home page
 
 .. toctree::
 
-   member1
-   member2
-   member3
-   member4
-   member5
+   Ömer GÜLER
+   Eray FELEK
+   İbrahim Ethem TÜRKERİ
    

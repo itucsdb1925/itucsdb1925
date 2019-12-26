@@ -1,17 +1,15 @@
-Welcome to itucsdbNN's documentation!
-=====================================
+Welcome to itucsdb1925's documentation!
+=======================================
 
-:Team: Team Name
+:Team: MobyCoin
 
 :Members:
 
-   * Member 1
-   * Member 2
-   * Member 3
-   * Member 4
-   * Member 5
+   * Ömer GÜLER
+   * ERAY FELEK
+   * İbrahim Ethem Türkeri
 
-**project description goes here (a few paragraphs)**
+MobyCoin is an application designed to ease currency exchanges as well as providing tools to help employers. Employers can pay their employee salaries with MobyCoin or cash automatically, users can see latest transactions they have commited and request cash or MobyCoin from another users when they need cash. If the request is accepted, the amount of money that was requested transferred to the user 
 
 Contents:
 
